@@ -23,6 +23,15 @@ async def fon(ctx, *args):
             result = get_fon([i])
         await ctx.send(f'```json\n{result}\n```')
 
+@bot.command()
+async def helper(ctx):
+
+        await ctx.send(' Tefas-Bot tefas.gov.tr de ki fon bilgilerini json formatinda tekli ve toplu olarak cekip donen bir bottur.')
+
+@bot.command()
+async def cmds(ctx):
+
+        await ctx.send(f'cmds komutu bot un mevcut komutlarini gosterir.\n```\n- $help\n- $cmds\n- $fon\n- ~fonName```')
 
 @bot.event
 async def on_ready():

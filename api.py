@@ -6,20 +6,16 @@ import json
 
 def get_fon(kod:list):
 
-
-    arr={}
+    arr = {}
     detail = {}
     for i in kod:
         link = f'https://www.tefas.gov.tr/FonAnaliz.aspx?FonKod={i}'
-        r=requests.get(link)
+        r = requests.get(link)
 
-        soup=BeautifulSoup(r.content,'lxml')
+        soup = BeautifulSoup(r.content,'lxml')
         div = soup.find("div", {"class": "main-indicators"})
         div_income = soup.find("div",{"price-indicators"})
 
-        fon_name  = div.h2.span.text
-
-        
         for ul1,ul2 in zip(div.find_all('ul'),div_income.find_all(('ul'))):
             for i,j in zip(ul1,ul2):
                 if type(i) ==  bs4.element.Tag :
