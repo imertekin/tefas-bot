@@ -32,14 +32,11 @@ async def on_ready():
 async def on_message(message):
     if message.author == bot.user:
         return
-    mention = message.author.mention
     msg = message.content.upper()
 
     if msg.startswith('~'):
         code = msg.split('~')[1]
         code = code.upper()
-        if code == 'ANAN' or 'ANNEN' or 'ANA' or 'BACI' or 'BACIN' or 'KARDES' or 'TEYZEN' or 'KARIN' or 'KIZIN':
-             await message.channel.send(f'{mention} senin {code}')
         if code in words:
             result = get_fon([code])
             await message.channel.send(f'```json\n{result}\n```')
