@@ -40,7 +40,7 @@ async def on_message(message):
         code = code.upper()
         if code == 'ANAN' or 'ANNEN' or 'ANA' or 'BACI' or 'BACIN' or 'KARDES' or 'TEYZEN' or 'KARIN' or 'KIZIN':
              await message.channel.send(f'{mention} senin {code}')
-        elif code in words:
+        if code in words:
             result = get_fon([code])
             await message.channel.send(f'```json\n{result}\n```')
         else:
