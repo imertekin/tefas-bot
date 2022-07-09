@@ -72,6 +72,7 @@ async def on_message(message):
         code = code.upper()
         if code in words:
             result = get_fon([code])
+            result = json.dumps(result, ensure_ascii=False,indent = 4)
             await message.channel.send(f'```json\n{result}\n```')
         else:
             await message.channel.send('Aradiginiz fon bulunamadi')
