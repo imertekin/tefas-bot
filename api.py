@@ -1,3 +1,4 @@
+from pprint import pprint
 import requests
 from bs4 import BeautifulSoup
 import bs4
@@ -27,13 +28,15 @@ def get_fon(kod:list):
         
         header = soup.find_all("td", {"class": "fund-profile-header"})
         value = soup.find_all("td", {"class": "fund-profile-item"})
-
+        href = soup.find_all("a", {"class": "fund-kap-link"})
+        
         for i,j in zip(header,value) :  
             if i.text != 'Kodu' :
                 detail[i.text] = j.text
             else :
                 arr[j.text] = detail
-                
-    arr = json.dumps(arr, ensure_ascii=False,indent = 4)
+        
+        for i in href:
+            arr['KAP'] = i['href']
     return arr
 

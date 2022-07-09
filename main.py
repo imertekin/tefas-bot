@@ -1,7 +1,9 @@
+import discord
 from discord.ext import commands
 from api import get_fon
 from dotenv import load_dotenv
 import os
+import json
 load_dotenv()
 
 words=[]
@@ -11,17 +13,39 @@ with open('tefas_kod.csv', 'r') as f:
         words.append(line.split(","))
     words=words[0]
 
+intents = discord.Intents.default()
+bot = commands.Bot(command_prefix='$', intents=intents)
 
-bot = commands.Bot(command_prefix='$')
+class KAP(discord.ui.View):
+    def __init__(self, url: str):
+        super().__init__()
+        self.add_item(discord.ui.Button(label="KAP",style=discord.ButtonStyle.green, url=url))
 
 
 @bot.command()
-async def fon(ctx, *args):
+async def fon(ctx,*args):
+    flag = args[0]
     for i in args:
         i = i.upper()
         if i in words:
             result = get_fon([i])
-        await ctx.send(f'```json\n{result}\n```')
+            kap = result['KAP']
+            result.pop('KAP',None)
+            if flag == '-d':
+                result = json.dumps(result, ensure_ascii=False,indent = 4)
+                await ctx.send(f'```json\n{result}\n```',view = KAP(kap))
+            else:
+                result = {i:{
+                    'Son Fiyat (TL)':result[i]['Son Fiyat (TL)'],
+                    'Günlük Getiri (%)':result[i]['Günlük Getiri (%)'],
+                    'Son 1 Ay Getirisi':result[i]['Son 1 Ay Getirisi'],
+                    'Son 3 Ay Getirisi':result[i]['Son 3 Ay Getirisi'],
+                    'Son 6 Ay Getirisi':result[i]['Son 6 Ay Getirisi'],
+                    'Son 1 Yıl Getirisi':result[i]['Son 1 Yıl Getirisi']
+                }}
+                result = json.dumps(result, ensure_ascii=False,indent = 4)
+                await ctx.send(f'```json\n{result}\n```',view = KAP(kap))
+        
 
 @bot.command()
 async def helper(ctx):
