@@ -1,3 +1,4 @@
+from pprint import pprint
 import requests
 from bs4 import BeautifulSoup
 import bs4
@@ -6,20 +7,16 @@ import json
 
 def get_fon(kod:list):
 
-
-    arr={}
+    arr = {}
     detail = {}
     for i in kod:
         link = f'https://www.tefas.gov.tr/FonAnaliz.aspx?FonKod={i}'
-        r=requests.get(link)
+        r = requests.get(link)
 
-        soup=BeautifulSoup(r.content,'lxml')
+        soup = BeautifulSoup(r.content,'lxml')
         div = soup.find("div", {"class": "main-indicators"})
         div_income = soup.find("div",{"price-indicators"})
 
-        fon_name  = div.h2.span.text
-
-        
         for ul1,ul2 in zip(div.find_all('ul'),div_income.find_all(('ul'))):
             for i,j in zip(ul1,ul2):
                 if type(i) ==  bs4.element.Tag :
@@ -31,13 +28,15 @@ def get_fon(kod:list):
         
         header = soup.find_all("td", {"class": "fund-profile-header"})
         value = soup.find_all("td", {"class": "fund-profile-item"})
-
+        href = soup.find_all("a", {"class": "fund-kap-link"})
+        
         for i,j in zip(header,value) :  
             if i.text != 'Kodu' :
                 detail[i.text] = j.text
             else :
                 arr[j.text] = detail
-                
-    arr = json.dumps(arr, ensure_ascii=False,indent = 4)
+        
+        for i in href:
+            arr['KAP'] = i['href']
     return arr
 
