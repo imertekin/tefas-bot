@@ -50,12 +50,12 @@ async def fon(ctx,*args):
 @bot.command()
 async def helper(ctx):
 
-        await ctx.send(' Tefas-Bot tefas.gov.tr de ki fon bilgilerini json formatinda tekli ve toplu olarak cekip donen bir bottur.')
+        await ctx.send('Tefas-Bot is a bot that collects the fund information in tefas.gov.tr in json format, individually and collectively.')
 
 @bot.command()
 async def cmds(ctx):
 
-        await ctx.send(f'cmds komutu bot un mevcut komutlarini gosterir.\n```\n- $help\n- $cmds\n- $fon\n- ~fonName```')
+        await ctx.send(f'cmds command shows the bots current commands.\n```\n- $helper\n- $cmds\n- $fon\n- ~fonName```')
 
 @bot.event
 async def on_ready():
@@ -75,7 +75,7 @@ async def on_message(message):
             result = json.dumps(result, ensure_ascii=False,indent = 4)
             await message.channel.send(f'```json\n{result}\n```')
         else:
-            await message.channel.send('Aradiginiz fon bulunamadi')
+            await message.channel.send('Fund Not Found')
     await bot.process_commands(message)
 
 bot.run(os.getenv('TOKEN'))

@@ -29,9 +29,27 @@ $ python main.py
 - You can '$code' (code = Fund code)
 
 ```bash
-$TGE
+$fon TGE
 ```
 
+```json
+{
+    "TGE": {
+        "Son Fiyat (TL)": "0,081849",
+        "Son 1 Ay Getirisi": "%-10,623731",
+        "Günlük Getiri (%)": "%-2,2173",
+        "Son 3 Ay Getirisi": "%3,729754",
+        "Pay (Adet)": "25.979.604.373",
+        "Son 6 Ay Getirisi": "%44,143494",
+        "Fon Toplam Değer (TL)": "2.126.403.817,06",
+        "Son 1 Yıl Getirisi": "%129,416711",
+    }
+}
+```
+
+```bash
+$fon -d TGE
+```
 ```json
 {
     "TGE": {
@@ -59,8 +77,9 @@ $TGE
         "Fonun Risk Değeri": "7"
     }
 }
+
 ```
-![](/images/img.png)
+![](/images/img1.png)
 ## Authors
 
 - [@imertekin](https://www.github.com/imertekin)
